@@ -1,12 +1,10 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../../hooks/UserContext";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
-import AddIcon from "@mui/icons-material/Add";
 import WeatherIcon from "@mui/icons-material/WbSunny";
 import CalendarIcon from "@mui/icons-material/EventNote";
 import Badge from "@mui/material/Badge";
@@ -22,34 +20,11 @@ const cardMediaStyle = {
   objectPosition: "center 40%",
 };
 
-const DashboardCard = ({ onAddNewTaskClick }) => {
-  const [userData, setUserData] = useState({});
+const DashboardCard = () => {
   const currentDate = new Date();
-  const { state } = useContext(UserContext);
-
-  const token = sessionStorage.getItem("token");
-
-  const user = state.user;
-
-  const fetchUser = useCallback(async () => {
-    try {
-      const response = await axios.get(`${API_URL}/users/token/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserData(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
-  console.log(userData);
-
+  // const { state } = useContext(UserContext);
+  // const user = state.user;
+  const user = JSON.parse(sessionStorage.getItem("user"));
   return (
     <div
       style={{
@@ -65,15 +40,33 @@ const DashboardCard = ({ onAddNewTaskClick }) => {
         elevation={0}
       >
         <CardContent>
-          <Typography variant="h5" color="primary" align="center" gutterBottom>
-            Welcome, <b>{userData.username}</b>!
-          </Typography>
-          <Typography variant="body1" color="textSecondary" align="center">
-            Role: {userData.role}
-          </Typography>
-          <Typography variant="body1" color="textSecondary" align="center">
-            Email: {userData.email}
-          </Typography>
+          {user ? (
+            <>
+              <Typography
+                variant="h5"
+                color="primary"
+                align="center"
+                gutterBottom
+              >
+                Welcome, <b>{user.username}</b>!
+              </Typography>
+              <Typography variant="body1" color="textSecondary" align="center">
+                Role: {user.role}
+              </Typography>
+              <Typography variant="body1" color="textSecondary" align="center">
+                Email: {user.email}
+              </Typography>
+            </>
+          ) : (
+            <Typography
+              variant="h5"
+              color="primary"
+              align="center"
+              gutterBottom
+            >
+              Please wait...
+            </Typography>
+          )}
         </CardContent>
       </Card>
 

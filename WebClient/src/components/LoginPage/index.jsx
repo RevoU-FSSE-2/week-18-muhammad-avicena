@@ -84,7 +84,10 @@ export default function LoginPageComponent() {
         password,
       });
       sessionStorage.setItem("token", response.data.data.accessToken);
-      dispatch({ type: "LOGIN", payload: response.data.data.accessToken });
+      sessionStorage.setItem("user", JSON.stringify(response.data.data));
+      dispatch({ type: "LOGIN", payload: response.data.data });
+
+      console.log(user);
 
       loadingAlert.close();
 
