@@ -42,29 +42,22 @@ class AuthService {
       if (passwordMatch) {
         if (!JWT_SIGN) throw new Error("JWT_SIGN is not defined");
 
-        const accessTokenExpiration = addDays(new Date(), 600);
         const accessToken = sign(
           { username: user.username, id: user._id, role: user.role },
           JWT_SIGN,
           { expiresIn: "1d" }
         );
-        const refreshTokenPayload: JwtPayload = {
-          username: user.username,
-          id: user._id,
-          role: user.role,
-        };
-        const refreshToken = sign(refreshTokenPayload, JWT_SIGN, {
-          expiresIn: "7d",
-        });
-
         await failedLoginAttemptsCache.del(username);
 
         return {
           success: true,
           message: {
             accessToken,
-            refreshToken,
-            accessTokenExpiration,
+            username: user.username,
+            id: user._id,
+            email: user.email,
+            role: user.role,
+            team: user.team,
           },
         };
       } else {
