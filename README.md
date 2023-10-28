@@ -61,11 +61,20 @@ You will need a github account to clone this repository, make sure you're connec
 
 **Endpoint :** [https://us-central1-todolist-app-f1db6.cloudfunctions.net/week_18_avicena](https://us-central1-todolist-app-f1db6.cloudfunctions.net/week_18_avicena)
 
+API Collection : [https://documenter.getpostman.com/view/3529439/2s9YRGwoex](https://documenter.getpostman.com/view/3529439/2s9YRGwoex)
 ![week-18](./assets-github/api.png)
 
-## DEPLOYMENT APP IN FIREBASE⚙️
+## SECURITY APPLICATION
 
-![Alt text](./assets-github/firebase.png)
+### Front end :
+
+![Alt text](./assets-github/security-frontend.png)
+
+### Back end :
+
+![Alt text](./assets-github/security-backend.png)
+
+## DEPLOYMENT APP IN FIREBASE⚙️
 
 The project has been successfully deployed using Firebase. You can access the production version of the website by following this link: [https://task-management.avicena.dev](https://task-management.avicena.dev).
 
