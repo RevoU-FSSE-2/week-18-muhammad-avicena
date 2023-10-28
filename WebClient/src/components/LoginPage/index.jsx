@@ -100,20 +100,11 @@ export default function LoginPageComponent() {
     } catch (error) {
       loadingAlert.close();
       console.log(error, "isi error");
-      if (error.code === "ERR_NETWORK") {
-        Swal.fire({
-          icon: "error",
-          title: "Internal Server Error",
-          text: "An error occurred while processing your request. Please try again later.",
-        });
-      }
-      if (error.response.status === 401) {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: "Incorrect username or password. Please try again.",
-        });
-      }
+      Swal.fire({
+        icon: "error",
+        title: `Login Failed`,
+        text: `${error.response.data.message}`,
+      });
     }
   };
 

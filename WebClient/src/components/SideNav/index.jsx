@@ -2,6 +2,7 @@ import * as React from "react";
 
 import KanbanBoard from "../KanbanBoard";
 import Dashboard from "../Dashboard";
+import AdminPanel from "../AdminPage";
 
 // MUI Components
 import { styled, useTheme } from "@mui/material/styles";
@@ -26,6 +27,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ViewKanbanIcon from "@mui/icons-material/ViewKanban";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const drawerWidth = 240;
 
@@ -97,6 +99,8 @@ export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [menuData, setMenuData] = React.useState("Dashboard");
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -208,6 +212,36 @@ export default function MiniDrawer() {
         </List>
         <Divider />
         <List>
+          {user.role !== "member" ? (
+            <ListItem
+              key={"AdminPanel"}
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => handleListItemClick("AdminPanel")}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Admin Panel"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ) : null}
           <ListItem
             key={"Log Out"}
             disablePadding
@@ -242,6 +276,7 @@ export default function MiniDrawer() {
         <DrawerHeader />
         {menuData === "Dashboard" && <Dashboard />}
         {menuData === "Progress Board" && <KanbanBoard />}
+        {menuData === "AdminPanel" && <AdminPanel />}
       </Box>
     </Box>
   );
